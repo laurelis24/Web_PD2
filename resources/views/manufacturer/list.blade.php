@@ -20,7 +20,12 @@
             <tr>
                 <td>{{ $manufacturer->id }}</td>
                 <td>{{ $manufacturer->name }}</td>
-                <td>Labot / Dzēst</td>
+                <td><a href="/manufacturers/update/{{ $manufacturer->id }}" class="btn btn-outline-primary btn-sm">Labot</a>
+                <form action="/manufacturers/delete/{{$manufacturer->id}}" method="POST" class="deletion-form d-inline">
+                    @csrf
+                    <button class="btn btn-outline-danger btn-sm" type="submit" class="">Dzēst</button>
+                </form>
+            </td>
             </tr>
             @endforeach
  

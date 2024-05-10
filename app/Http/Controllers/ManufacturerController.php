@@ -6,9 +6,22 @@ use App\Models\Manufacturer;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Controllers\HasMiddleware;
 
-class ManufacturerController extends Controller
-{
+class ManufacturerController extends Controller implements HasMiddleware{
+
+     public static function middleware(): array
+    {
+        return [
+            'auth',
+        ];
+    }
+
+    /*
+    public function __construct(){
+        $this->middleware("auth");
+    }
+    */
     // display all Manufacturers
     public function list(): View {
         $items = Manufacturer::orderBy("name", "asc")->get();
@@ -27,12 +40,13 @@ class ManufacturerController extends Controller
         return view(
             'manufacturer.form',
             [
-                'title' => 'Pievienot izgatavotāju'
+                'title' => 'Pievienot izgatavotāju',
+                'manufacturer' => new Manufacturer,
             ]
         );
     }
 
-   // creates new Author data
+   // puts new Author data
     public function put(Request $request): RedirectResponse
     {
         $validatedData = $request->validate([
@@ -44,5 +58,36 @@ class ManufacturerController extends Controller
         $manufacturer->save();
 
         return redirect('/manufacturers');
+    }
+
+
+    public function update(Manufacturer $manufacturer): View
+    {
+        return view(
+            'manufacturer.form',
+            [
+                'title' => 'Rediģēt izgatavotāju',
+                'manufacturer' => $manufacturer,
+            ]
+        );
+    }
+
+   // patches new Author data
+    public function patch(Manufacturer $manufacturer, Request $request): RedirectResponse
+    {
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        $manufacturer = new Manufacturer();
+        $manufacturer->name = $validatedData['name'];
+        $manufacturer->save();
+
+        return redirect('/manufacturers');
+    }
+
+    public function delete(Manufacturer $manufacturer): RedirectResponse{
+        $manufacturer->delete();
+        return redirect("/manufacturers");
     }
 }

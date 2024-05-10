@@ -25,9 +25,21 @@
                         <li class="nav-item">
                             <a class="nav-link" href="/">Sākumlapa</a>
                         </li>
+                        @if(Auth::check())
                         <li class="nav-item">
                             <a class="nav-link" href="/manufacturers">Izgatavotaji</a>
                         </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="/logout">Beigt darbu</a>
+                        </li>
+                        
+                        @else
+                             <li class="nav-item">
+                            <a class="nav-link" href="/login">Pieslēgties</a>
+                        </li>
+                        @endif
+
                     </ul>
                 </div>
             </div>
@@ -53,6 +65,7 @@
             </div>
         </footer>
 
+        <script src="/js/admin.js"></script>
     </body>
 
 </html>
