@@ -17,44 +17,38 @@ class ManufacturerController extends Controller implements HasMiddleware{
         ];
     }
 
-    /*
-    public function __construct(){
-        $this->middleware("auth");
-    }
-    */
-    // display all Manufacturers
     public function list(): View {
         $items = Manufacturer::orderBy("name", "asc")->get();
 
         return view("manufacturer.list", 
-        ["title" => "Izgatavotāji", 
+        ["title" => "Ražotāji", 
         "items" => $items
-    ]);
+         ]);
     }
     
-    /// dispaly new Author
-    // create new Author data
-// display new Author form
+    
     public function create(): View
     {
         return view(
             'manufacturer.form',
             [
-                'title' => 'Pievienot izgatavotāju',
+                'title' => 'Pievienot ražotāju',
                 'manufacturer' => new Manufacturer,
             ]
         );
     }
 
-   // puts new Author data
+   
     public function put(Request $request): RedirectResponse
     {
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
+            'country' => 'required|string|max:255',
         ]);
 
         $manufacturer = new Manufacturer();
         $manufacturer->name = $validatedData['name'];
+        $manufacturer->country = $validatedData['country'];
         $manufacturer->save();
 
         return redirect('/manufacturers');
@@ -66,21 +60,23 @@ class ManufacturerController extends Controller implements HasMiddleware{
         return view(
             'manufacturer.form',
             [
-                'title' => 'Rediģēt izgatavotāju',
+                'title' => 'Rediģēt ražotāju',
                 'manufacturer' => $manufacturer,
             ]
         );
     }
 
-   // patches new Author data
+   
     public function patch(Manufacturer $manufacturer, Request $request): RedirectResponse
     {
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
+            'country' => 'required|string|max:255',
         ]);
 
-        $manufacturer = new Manufacturer();
+        //$manufacturer = new Manufacturer();
         $manufacturer->name = $validatedData['name'];
+        $manufacturer->country = $validatedData['country'];
         $manufacturer->save();
 
         return redirect('/manufacturers');

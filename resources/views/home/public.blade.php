@@ -3,11 +3,14 @@
 
     <head>
         <meta charset="utf-8">
-        <title>PD2 - {{ $title }}</title>
-        <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <title>PD2 - {{ $title }}</title>
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+            crossorigin="anonymous"
+        >
 
         <script defer src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
@@ -15,14 +18,16 @@
     </head>
 
     <body>
-    <!-- navbar navbar-expand-md bg-dark mb-3 -->
-        <nav class="navbar navbar-expand-md bg-dark" data-bs-theme="dark">
+          <nav class="navbar navbar-expand-md bg-dark sticky-top" data-bs-theme="dark">
+            
             <div class="container">
-                 <span class="navbar-brand">
+                <span class="navbar-brand">
                     <img class="d-inline-block align-top" width="110px" height="50px" src="https://d29fhpw069ctt2.cloudfront.net/clipart/92991/preview/1319388002_preview_d5d5.png" alt="logo">
                 </span>
+                
 
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navBarNav" aria-controls="navBarNav" aria-expanded="false" aria-label="Toggle navigation">
+
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navBarNav" aria-controls="navBarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                      </button>
 
@@ -57,29 +62,28 @@
                     </ul>
                 </div>
             </div>
-        </nav>
+        </nav>  
 
-        <main class="container">
-            <div class="row">
-                <div class="col">
-
-                @yield('content')
-
-                </div>
-            </div>
+          <!-- class="container" -->
+        <main>
+            <div id="root"></div>
         </main>
 
-        <footer class="text-bg-dark mt-3">
+        
+
+        <footer class="text-bg-dark border-top">
             <div class="container">
-                <div class="row py-5">
+                <div class="row p-4">
                     <div class="col">
-                        L. Kairo, 2024
+                        <p class="">L. Kairo, VeA 2024</p>
                     </div>
                 </div>
             </div>
         </footer>
 
-        <script src="/js/admin.js"></script>
+        @viteReactRefresh
+        @vite('resources/js/index.jsx')
+
     </body>
 
 </html>

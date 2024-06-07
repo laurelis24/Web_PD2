@@ -10,9 +10,10 @@ class HomeController extends Controller
     public function index(): View
     {
         return view(
-            'home.index',
+            'home.public',     // new -> 'home.public'     // old-> home.index 
             [
-                'title' => 'Sākumlapa',
+                'title' => 's23kairlaur',
+                
             ]
         );
     }

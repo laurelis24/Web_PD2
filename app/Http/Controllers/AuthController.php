@@ -33,8 +33,7 @@ public function authenticate(Request $request): RedirectResponse
  
         $request->session()->regenerate();
  
-        // Šo vēlāk nomainīsim uz /books
-        return redirect('/manufacturers');
+        return redirect('/cars');
     }
  
     return back()->withErrors([
