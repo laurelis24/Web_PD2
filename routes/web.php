@@ -51,3 +51,4 @@ Route::post('/categories/delete/{category}', [CategoryController::class, 'delete
 Route::get('/data/get-top-cars', [DataController::class, 'getTopCars']);
 Route::get('/data/get-car/{car}', [DataController::class, 'getCar']);
 Route::get('/data/get-related-cars/{car}', [DataController::class, 'getRelatedCars']);
+Route::get('/data/get-not-related-cars/{car}', [DataController::class, 'getNotRelatedCars']);

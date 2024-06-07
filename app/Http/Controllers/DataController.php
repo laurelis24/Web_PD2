@@ -50,4 +50,19 @@ return response()->json($cars);
 }
 
 
+public function getNotRelatedCars(Car $car): JsonResponse
+
+{
+$cars = Car::where('display', true)
+->where('id', '<>', $car->id)
+->whereOr("manufacturer_id", "!=", $car->manufacturer->id)  // not same manufacturer
+->where("category_id", "!=", $car->category->id)   // not same category
+->inRandomOrder()
+->take(5)
+->get();
+
+return response()->json($cars);
+}
+
+
 }

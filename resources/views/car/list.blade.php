@@ -43,10 +43,10 @@
                     <td  style="line-height:80px;">{{"€" . number_format($car->price, 2, '.') }}</td>
                     <td  style="line-height:80px;">{!! $car->display ? '&#x2714;' : '&#x274C;' !!}</td>
                     <td>
-                        <!--   src="images/{{$car->image ? $car->image : "placeholder_image.png"}}" -->
+                        
                         <img 
                         style="width: 80px; height:80px; min-height:80px; min-width:80px;" class="img-thumbnail" 
-                        src="images/{{$car->image ? $car->image : "placeholder_image.png"}}"
+                        src={{$car->image ? "images/$car->image" : "./placeholder_image.png"}}
                         
                         alt="{{$car->model}}">
                     </td>

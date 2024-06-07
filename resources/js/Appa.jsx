@@ -4,8 +4,31 @@ import { useEffect, useState } from "react";
 
 export default function App2() {
     const [selectedCar, setSelectedCar] = useState(null);
+    const [carCounter, setCarCounter] = useState(0);
     function handleCarSelection(id) {
         setSelectedCar(id);
+        setCarCounter(0);
+        console.log(carCounter);
+    }
+
+    function carCounterPlus(notRelatedCars) {
+        setCarCounter((count) =>
+            count < notRelatedCars.length - 1
+                ? count + 1
+                : count === notRelatedCars.length - 1
+                ? 0
+                : count
+        );
+    }
+
+    function carCounterMinus(notRelatedCars) {
+        setCarCounter((count) =>
+            count > 0
+                ? count - 1
+                : count === 0
+                ? notRelatedCars.length - 1
+                : count
+        );
     }
 
     return (
@@ -14,6 +37,9 @@ export default function App2() {
                 <CarPage
                     selectedCar={selectedCar}
                     onSelect={handleCarSelection}
+                    carCounter={carCounter}
+                    onCarCounterPlus={carCounterPlus}
+                    onCarCounterMinus={carCounterMinus}
                 />
             ) : (
                 <HomePage onSelect={handleCarSelection} />
@@ -110,13 +136,25 @@ function TopCar({ car, onSelect, twoCar }) {
     );
 }
 
-function CarPage({ selectedCar, onSelect }) {
-    //const [scrollPos, setScrollPos] = useState(0);
+function CarPage({
+    selectedCar,
+    onSelect,
+    carCounter,
+    onCarCounterPlus,
+    onCarCounterMinus,
+}) {
     return (
         <>
             <BackButton onSelect={onSelect} />
             <CarDetails selectedCar={selectedCar} onSelect={onSelect} />
             <RelatedContainer selectedCar={selectedCar} onSelect={onSelect} />
+            <NotRelatedContainer
+                selectedCar={selectedCar}
+                onSelect={onSelect}
+                carCounter={carCounter}
+                onCarCounterMinus={onCarCounterMinus}
+                onCarCounterPlus={onCarCounterPlus}
+            />
         </>
     );
 }
@@ -126,34 +164,33 @@ function CarDetails({ selectedCar }) {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState("");
 
-    async function getCarData(selectedCar) {
-        try {
-            setIsLoading(true);
-            setError("");
-
-            const result = await fetch(
-                `http://localhost/data/get-car/` + selectedCar,
-
-                {
-                    mode: "cors",
-                }
-            );
-
-            if (!result.ok) {
-                throw new Error("Kļūda ielādējot datus");
-            }
-
-            const data = await result.json();
-
-            setCarData(data);
-        } catch (error) {
-            setError(error.message);
-        } finally {
-            setIsLoading(false);
-        }
-    }
-
     useEffect(() => {
+        async function getCarData(selectedCar) {
+            try {
+                setIsLoading(true);
+                setError("");
+
+                const result = await fetch(
+                    `http://localhost/data/get-car/` + selectedCar,
+
+                    {
+                        mode: "cors",
+                    }
+                );
+
+                if (!result.ok) {
+                    throw new Error("Kļūda ielādējot datus");
+                }
+
+                const data = await result.json();
+
+                setCarData(data);
+            } catch (error) {
+                setError(error.message);
+            } finally {
+                setIsLoading(false);
+            }
+        }
         getCarData(selectedCar);
     }, [selectedCar]);
 
@@ -213,31 +250,30 @@ function RelatedContainer({ selectedCar, onSelect }) {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState("");
 
-    async function getRelatedCars(selectedCar) {
-        try {
-            setIsLoading(true);
-            setError("");
-
-            const result = await fetch(
-                `http://localhost/data/get-related-cars/` + selectedCar,
-                { mode: "cors" }
-            );
-
-            if (!result.ok) {
-                throw new Error("Kļūda ielādējot datus");
-            }
-
-            const data = await result.json();
-
-            setRelatedCars(data);
-        } catch (error) {
-            setError(error.message);
-        } finally {
-            setIsLoading(false);
-        }
-    }
-
     useEffect(() => {
+        async function getRelatedCars(selectedCar) {
+            try {
+                setIsLoading(true);
+                setError("");
+
+                const result = await fetch(
+                    `http://localhost/data/get-related-cars/` + selectedCar,
+                    { mode: "cors" }
+                );
+
+                if (!result.ok) {
+                    throw new Error("Kļūda ielādējot datus");
+                }
+
+                const data = await result.json();
+
+                setRelatedCars(data);
+            } catch (error) {
+                setError(error.message);
+            } finally {
+                setIsLoading(false);
+            }
+        }
         getRelatedCars(selectedCar);
     }, [selectedCar]);
 
@@ -299,6 +335,103 @@ function RelatedCar({ car, onSelect, isLoading }) {
                 </div>
             )}
         </>
+    );
+}
+
+function NotRelatedContainer({
+    selectedCar,
+    onSelect,
+    carCounter,
+    onCarCounterMinus,
+    onCarCounterPlus,
+}) {
+    const [notRelatedCars, setNotRelatedCars] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState("");
+
+    useEffect(() => {
+        async function getNotRelatedCars() {
+            try {
+                setIsLoading(true);
+                setError("");
+
+                const result = await fetch(
+                    `http://localhost/data/get-not-related-cars/` + selectedCar,
+
+                    {
+                        mode: "cors",
+                    }
+                );
+
+                if (!result.ok) {
+                    throw new Error("Kļūda ielādējot datus");
+                }
+
+                const data = await result.json();
+
+                setNotRelatedCars(data);
+            } catch (error) {
+                setError(error.message);
+            } finally {
+                setIsLoading(false);
+            }
+        }
+        getNotRelatedCars(selectedCar);
+    }, [selectedCar]);
+
+    return (
+        <>
+            <h1 className="not-related-cars-h1">Citas automašīnas</h1>
+            <div className="not-related-cars-container">
+                {isLoading && <Loader />}
+                {error && <ErrorMsg message={error} />}
+
+                {!isLoading && !error && notRelatedCars.length && (
+                    <>
+                        <button
+                            className="c-btn left"
+                            onClick={() => onCarCounterMinus(notRelatedCars)}
+                        >
+                            <img src="./arrow.png" alt="arr-left" />
+                        </button>
+
+                        <NotRelatedCar
+                            onSelect={onSelect}
+                            /* selectedCar={selectedCar} */
+                            car={notRelatedCars[carCounter]}
+                        />
+                        <button
+                            className="c-btn right"
+                            onClick={() => onCarCounterPlus(notRelatedCars)}
+                        >
+                            <img src="./arrow.png" alt="arr-left" />
+                        </button>
+                    </>
+                )}
+            </div>
+        </>
+    );
+}
+
+function NotRelatedCar({ onSelect, car }) {
+    let imgLink =
+        "http://localhost/images" === car.image
+            ? "./placeholder_image.png"
+            : car.image;
+    return (
+        <div className="related-car not-related-car">
+            <h5 className="related-car-h5">{car.model}</h5>
+            <img src={imgLink} alt={car.model} />
+
+            <button
+                className="related-car-btn"
+                onClick={() => {
+                    onSelect(car.id);
+                }}
+            >
+                Apskatīt
+            </button>
+        </div>
     );
 }
 
