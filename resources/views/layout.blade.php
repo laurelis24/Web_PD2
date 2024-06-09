@@ -69,11 +69,12 @@
             </div>
         </main>
 
-        <footer class="text-bg-dark mt-3">
+       
+         <footer class="text-bg-dark border-top">
             <div class="container">
-                <div class="row py-5">
+                <div class="row p-4">
                     <div class="col">
-                        L. Kairo, 2024
+                        <p class="text-center">L. Kairo, VeA 2024</p>
                     </div>
                 </div>
             </div>

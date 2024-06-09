@@ -8,7 +8,6 @@ export default function App() {
     function handleCarSelection(id) {
         setSelectedCar(id);
         setCarCounter(0);
-        console.log(carCounter);
     }
 
     function carCounterPlus(notRelatedCars) {
@@ -430,6 +429,11 @@ function NotRelatedContainer({
 }
 
 function NotRelatedCar({ onSelect, car, showAnimation }) {
+    function handleScroll() {
+        setTimeout(() => {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }, 300);
+    }
     let imgLink =
         "http://localhost/images" === car.image
             ? "./placeholder_image.png"
@@ -448,6 +452,7 @@ function NotRelatedCar({ onSelect, car, showAnimation }) {
                 className="related-car-btn"
                 onClick={() => {
                     onSelect(car.id);
+                    handleScroll();
                 }}
             >
                 Apskatīt

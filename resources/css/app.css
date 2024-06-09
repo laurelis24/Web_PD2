@@ -70,6 +70,7 @@ p {
 
 .info-container p {
     width: 60%;
+    word-break: break-all;
 }
 
 .info-container {
@@ -184,6 +185,7 @@ p {
     font-weight: 500;
     border: solid 1px rgba(101, 99, 99, 0.2);
     transition: all 0.2s;
+    word-break: break-all;
 }
 
 /* back to the beginning buttton*/
@@ -338,7 +340,7 @@ p {
 }
 
 .related-car.not-related-car {
-    width: 60%;
+    width: 50%;
     height: 600px;
     border-radius: 10px;
 }

@@ -4,6 +4,8 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="author" content="Lauris Kairo">
+        <meta name="description" content="PD2">
         <title>PD2 - {{ $title }}</title>
         <link
             href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
@@ -75,7 +77,7 @@
             <div class="container">
                 <div class="row p-4">
                     <div class="col">
-                        <p class="">L. Kairo, VeA 2024</p>
+                        <p class="text-center">L. Kairo, VeA 2024</p>
                     </div>
                 </div>
             </div>
